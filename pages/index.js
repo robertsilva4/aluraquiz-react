@@ -46,7 +46,7 @@ const Widget = styled.div`
     font-weight: 400;
     line-height: 1;
   }
-`;
+`; 
 
 Widget.Content = styled.div`
   padding: 24px 32px 32px 32px;
