@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // eslint-disable-next-line import/no-unresolved
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -31,8 +31,10 @@ export const QuizContainer = styled.div`
 
 export default function Home() {
   const router = useRouter();
+  const [name, setName] = useState('');
+  console.log('retorno do useState', name, setName);
   return (
-    <QuizBackground backgroundImage={db.bg} projectUrl="https://github.com/robertsilva4">
+    <QuizBackground backgroundImage={db.bg}>
       <Head>
         <title>Alura Quiz - Modelo Base</title>
       </Head>
@@ -45,16 +47,22 @@ export default function Home() {
           <Widget.Content>
             <form onSubmit={function (infosDoEvento) {
               infosDoEvento.preventDefault();
-              const name = 'Robert';
               router.push(`/quiz?name=${name}`);
               console.log('Fazendo uma submissão por meio do React');
-
               // router envia para próxima página
             }}
             >
-              <input placeholder="Preencha com seu nome" />
-              <button type="submit">
-                Jogar [seuNome]
+              <input
+                onChange={function (infosDoEvento) {
+                  console.log(infosDoEvento.target.value);
+                  // name = infosDoEvento.target.value;
+                  setName(infosDoEvento.target.value);
+                }}
+                placeholder="Preencha com seu nome"
+              />
+              <button type="submit" disabled={name.length === 0}>
+                Jogar
+                {name}
               </button>
             </form>
           </Widget.Content>
