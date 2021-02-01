@@ -34,7 +34,6 @@ const QuizContainer = styled.div`
 export default function Home() {
   const router = useRouter();
   const [name, setName] = useState('');
-  console.log('retorno do useState', name, setName);
   return (
     <QuizBackground backgroundImage={db.bg}>
       <Head>
@@ -50,7 +49,6 @@ export default function Home() {
             <form onSubmit={function (infosDoEvento) {
               infosDoEvento.preventDefault();
               router.push(`/quiz?name=${name}`);
-              console.log('Fazendo uma submissão por meio do React');
               // router envia para próxima página
             }}
             >
@@ -69,7 +67,23 @@ export default function Home() {
         <Widget>
           <Widget.Content>
             <h1>Quizes da Galera</h1>
-            <p>Lorem Ipsum</p>
+            <ul>
+              {/* eslint-disable-next-line array-callback-return */}
+              {db.external.map((linkExterno) => {
+                const [projectName, projectUser] = linkExterno
+                  .replace(/\//g, '')
+                  .replace('https:', '')
+                  .replace('.vercel.app', '')
+                  .split('.');
+                return (
+                  <li key={linkExterno}>
+                    <Widget.Topic href={linkExterno}>
+                      {`${projectUser}/${projectName}`}
+                    </Widget.Topic>
+                  </li>
+                );
+              })}
+            </ul>
           </Widget.Content>
         </Widget>
         <Footer />
